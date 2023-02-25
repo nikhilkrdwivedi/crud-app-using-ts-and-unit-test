@@ -13,9 +13,9 @@ import {
   deleteById,
 } from "../providers/todos";
 import { CustomRequest } from "../types/customRequest";
-import HttpResponse from "../constants/httpResponse";
+import httpResponseMessages from "../constants/httpResponseMessages";
 import { transformTodoUpdatePayload } from "../helpers/todos";
-import httpResponseMessages from "../constants/httpResponse";
+import { TODOS_STATUS } from "../constants/todos";
 
 export const getTodos = async (request: CustomRequest, response: Response) => {
   try {
@@ -32,13 +32,13 @@ export const getTodos = async (request: CustomRequest, response: Response) => {
     return response.status(200).json({
       success: true,
       message: httpResponseMessages.FETCH_SUCCESS,
-      data,
       pagination,
+      data,
     });
   } catch (error) {
     return response.status(500).json({
       success: false,
-      message: HttpResponse.INTERNAL_SERVER_ERROR,
+      message: httpResponseMessages.INTERNAL_SERVER_ERROR,
       error,
     });
   }
@@ -57,7 +57,7 @@ export const getTodo = async (request: CustomRequest, response: Response) => {
   } catch (error) {
     return response.status(500).json({
       success: false,
-      message: HttpResponse.INTERNAL_SERVER_ERROR,
+      message: httpResponseMessages.INTERNAL_SERVER_ERROR,
       error,
     });
   }
@@ -73,13 +73,13 @@ export const addTodo = async (request: CustomRequest, response: Response) => {
     const data = await create(requestPayload);
     return response.status(200).json({
       success: true,
-      message: HttpResponse.CREATE_SUCCESS,
+      message: httpResponseMessages.CREATE_SUCCESS,
       data,
     });
   } catch (error) {
     return response.status(500).json({
       success: false,
-      message: HttpResponse.INTERNAL_SERVER_ERROR,
+      message: httpResponseMessages.INTERNAL_SERVER_ERROR,
       error,
     });
   }
@@ -97,13 +97,13 @@ export const updateTodo = async (
     const data = await update(query, requestPayload);
     return response.status(200).json({
       success: true,
-      message: HttpResponse.UPDATE_SUCCESS,
+      message: httpResponseMessages.UPDATE_SUCCESS,
       data,
     });
   } catch (error) {
     return response.status(500).json({
       success: false,
-      message: HttpResponse.INTERNAL_SERVER_ERROR,
+      message: httpResponseMessages.INTERNAL_SERVER_ERROR,
       error,
     });
   }
@@ -119,16 +119,75 @@ export const deleteTodo = async (
     const data = await deleteById(todoId, optionalQuery);
     return response.status(200).json({
       success: true,
-      message: HttpResponse.DELETED_SUCCESS,
+      message: httpResponseMessages.DELETED_SUCCESS,
       data,
     });
   } catch (error) {
     return response.status(500).json({
       success: false,
-      message: HttpResponse.INTERNAL_SERVER_ERROR,
+      message: httpResponseMessages.INTERNAL_SERVER_ERROR,
+      error,
+    });
+  }
+};
+export const updateTodoStatus = async (
+  request: CustomRequest,
+  response: Response
+) => {
+  try {
+    let { todoId, status } = request.params;
+    if (!status) {
+      return response.status(200).json({
+        success: true,
+        message: httpResponseMessages.STATUS_MISSING,
+        data: null,
+      });
+    }
+    let payload = {};
+    const query = { todoId, author: request?.user?._id };
+    status = status?.toUpperCase();
+
+    if (status === TODOS_STATUS.COMPLETED) {
+      payload = {
+        ...payload,
+        status: TODOS_STATUS.COMPLETED,
+        completionDate: new Date(),
+      };
+    }
+
+    if (status === TODOS_STATUS.INPROGRESS) {
+      payload = {
+        status: TODOS_STATUS.INPROGRESS,
+      };
+    }
+
+    if (status === TODOS_STATUS.SCHEDULED) {
+      payload = {
+        status: TODOS_STATUS.SCHEDULED,
+        completionDate: null,
+      };
+    }
+
+    const data = await update(query, payload);
+    return response.status(200).json({
+      success: true,
+      message: httpResponseMessages.UPDATE_SUCCESS,
+      data,
+    });
+  } catch (error) {
+    return response.status(500).json({
+      success: false,
+      message: httpResponseMessages.INTERNAL_SERVER_ERROR,
       error,
     });
   }
 };
 
-export default { getTodos, getTodo, addTodo, updateTodo, deleteTodo };
+export default {
+  getTodos,
+  getTodo,
+  addTodo,
+  updateTodo,
+  deleteTodo,
+  updateTodoStatus,
+};

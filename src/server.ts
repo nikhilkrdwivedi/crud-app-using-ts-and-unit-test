@@ -1,15 +1,22 @@
 import express, { Express, Request, Response } from "express";
 import mongoose from "mongoose";
+import swagger from "swagger-ui-express";
+
 import environment from "./configurations/environment";
-import httpResponseMessages from "./constants/httpResponse";
+import httpResponseMessages from "./constants/httpResponseMessages";
+import authenticationRouter from "./routes/authentications";
 import todoRouter from "./routes/todos";
+import swaggerDocs from "./swagger/docs";
 
 const app: Express = express();
 
 //middleware
 app.use(express.json());
+app.use("/docs", swagger.serve);
+app.use("/docs", swagger.setup(swaggerDocs));
 
 app.use("/api/v1/todos/", todoRouter);
+app.use("/api/v1/authentications/", authenticationRouter);
 
 app.get("/", (req: Request, res: Response) => {
   return res.status(200).json({

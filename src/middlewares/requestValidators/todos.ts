@@ -39,10 +39,10 @@ export const addTodoValidation = (
   response: Response,
   next: NextFunction
 ) => {
-  const reqBodySchema = joi.object(addTodoRequestSchema);
-  const reqBodyValidation = reqBodySchema.validate(request.body);
-  if (reqBodyValidation.error) {
-    return error(reqBodyValidation.error, response);
+  const requestBodySchema = joi.object(addTodoRequestSchema);
+  const requestBodyValidation = requestBodySchema.validate(request.body);
+  if (requestBodyValidation.error) {
+    return error(requestBodyValidation.error, response);
   } else {
     next();
   }
@@ -53,11 +53,11 @@ export const updateTodoValidation = (
   response: Response,
   next: NextFunction
 ) => {
-  const reqBodySchema = joi.object(updateTodoRequestSchema);
-  const reqBodyValidation = reqBodySchema.validate(request.body);
-  console.log(reqBodyValidation);
-  if (reqBodyValidation.error) {
-    return error(reqBodyValidation.error, response);
+  const requestBodySchema = joi.object(updateTodoRequestSchema);
+  const requestBodyValidation = requestBodySchema.validate(request.body);
+  console.log(requestBodyValidation);
+  if (requestBodyValidation.error) {
+    return error(requestBodyValidation.error, response);
   }
   next();
 };

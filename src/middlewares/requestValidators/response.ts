@@ -1,5 +1,5 @@
 import { Response } from "express";
-import HttpResponse from "../../constants/httpResponse";
+import httpResponseMessages from "../../constants/httpResponseMessages";
 export const error = function error(error: any, response: Response) {
   let errorMsg;
   if (typeof error === "string") {
@@ -12,13 +12,11 @@ export const error = function error(error: any, response: Response) {
   } else {
     errorMsg = error.details[0].message;
   }
-  return response
-    .status(error.status || 400)
-    .json({
-      success: false,
-      message: HttpResponse.BAD_REQUEST,
-      error: errorMsg,
-    });
+  return response.status(error.status || 400).json({
+    success: false,
+    message: httpResponseMessages.BAD_REQUEST,
+    error: errorMsg,
+  });
 };
 
 export default {
