@@ -1,9 +1,22 @@
 import { Router } from "express";
-import { getTodos, getTodo } from "../controllers/todos";
+import controllers from "../controllers/todos";
+import validator from "../middlewares/requestValidators/todos";
+const todoRouter = Router();
 
-const toDoRouter = Router();
+todoRouter.get("/", controllers.getTodos);
+todoRouter.get("/:todoId", validator.validateParams, controllers.getTodo);
+todoRouter.post("/", validator.addTodoValidation, controllers.addTodo);
+todoRouter.patch(
+  "/:todoId/status/:status",
+  validator.validateParams,
+  controllers.addTodo
+);
+todoRouter.put(
+  "/:todoId",
+  validator.validateParams,
+  validator.updateTodoValidation,
+  controllers.updateTodo
+);
+todoRouter.delete("/:todoId", validator.validateParams, controllers.deleteTodo);
 
-toDoRouter.get("/", getTodos);
-toDoRouter.get("/:toDoId", getTodo);
-
-export default toDoRouter;
+export default todoRouter;
