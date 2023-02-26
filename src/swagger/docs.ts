@@ -12,8 +12,12 @@ const swaggerDocs = {
   },
   servers: [
     {
+      url: "http://3.111.226.44:3020",
+      description: "Backend server",
+    },
+    {
       url: environment.SERVER,
-      description: "backend server",
+      description: "Dev server",
     },
   ],
   components: {
