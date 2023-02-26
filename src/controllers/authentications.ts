@@ -88,7 +88,7 @@ export const logout = async (request: CustomRequest, response: Response) => {
     const user = request.user;
     const isValidToken = jwt.verify(token, environment.JWT_SECRET);
     if (!isValidToken) {
-      return response.status(400).json({
+      return response.status(401).json({
         success: false,
         message: httpResponseMessages.ACCESS_DENIED,
         error: null,
@@ -120,7 +120,7 @@ export const validateToken = async (request: Request, response: Response) => {
     if (!token) {
       return response.status(401).json({
         success: false,
-        message: httpResponseMessages.LOGOUT_DENIED,
+        message: httpResponseMessages.ACCESS_DENIED,
         error: null,
       });
     }
@@ -169,7 +169,7 @@ export const register = async (request: Request, response: Response) => {
     const registerUser = request.body;
     //password check
     if (!AUTH_CONSTANTS.passwordRegex.test(registerUser.password)) {
-      return response.status(400).json({
+      return response.status(401).json({
         success: false,
         message: httpResponseMessages.INVALID_PASSWORD_ERROR,
         error: registerUser,

@@ -8,7 +8,7 @@ import {
   deleteTodoRequestBody,
   updateTodoStatusApiSuccessResponse,
 } from "../data/todos";
-import { internalServerError } from "../data/httpErrors";
+import { commonHttpErrors, badRequestError } from "../data/httpErrors";
 
 const getTodos = {
   tags: ["Todos"],
@@ -26,17 +26,10 @@ const getTodos = {
         },
       },
     },
-    500: {
-      description:
-        "This will return an object having keys [success, message, error]",
-      content: {
-        "application/json": {
-          schema: internalServerError,
-        },
-      },
-    },
+    ...commonHttpErrors,
   },
 };
+
 const getTodo = {
   tags: ["Todos"],
   description:
@@ -64,15 +57,7 @@ const getTodo = {
         },
       },
     },
-    500: {
-      description:
-        "This will return an object having keys [success, message, error]",
-      content: {
-        "application/json": {
-          schema: internalServerError,
-        },
-      },
-    },
+    ...commonHttpErrors,
   },
 };
 
@@ -99,25 +84,11 @@ const addTodo = {
         },
       },
     },
-    500: {
-      description:
-        "This will return an object having keys [success, message, error]",
-      content: {
-        "application/json": {
-          schema: internalServerError,
-        },
-      },
-    },
-    // 401: {
-    //   description: "This will return an object having keys [errorMsg]",
-    //   content: {
-    //     "application/json": {
-    //       schema: unauthorizedErrorObj,
-    //     },
-    //   },
-    // },
+    ...badRequestError,
+    ...commonHttpErrors,
   },
 };
+
 const updateTodo = {
   tags: ["Todos"],
   description:
@@ -152,25 +123,10 @@ const updateTodo = {
         },
       },
     },
-    500: {
-      description:
-        "This will return an object having keys [success, message, error]",
-      content: {
-        "application/json": {
-          schema: internalServerError,
-        },
-      },
-    },
-    // 401: {
-    //   description: "This will return an object having keys [errorMsg]",
-    //   content: {
-    //     "application/json": {
-    //       schema: unauthorizedErrorObj,
-    //     },
-    //   },
-    // },
+    ...commonHttpErrors,
   },
 };
+
 const updateTodoStatus = {
   tags: ["Todos"],
   description:
@@ -206,25 +162,10 @@ const updateTodoStatus = {
         },
       },
     },
-    500: {
-      description:
-        "This will return an object having keys [success, message, error]",
-      content: {
-        "application/json": {
-          schema: internalServerError,
-        },
-      },
-    },
-    // 401: {
-    //   description: "This will return an object having keys [errorMsg]",
-    //   content: {
-    //     "application/json": {
-    //       schema: unauthorizedErrorObj,
-    //     },
-    //   },
-    // },
+    ...commonHttpErrors,
   },
 };
+
 const deleteTodo = {
   tags: ["Todos"],
   description:
@@ -252,25 +193,10 @@ const deleteTodo = {
         },
       },
     },
-    500: {
-      description:
-        "This will return an object having keys [success, message, error]",
-      content: {
-        "application/json": {
-          schema: internalServerError,
-        },
-      },
-    },
-    // 401: {
-    //   description: "This will return an object having keys [errorMsg]",
-    //   content: {
-    //     "application/json": {
-    //       schema: unauthorizedErrorObj,
-    //     },
-    //   },
-    // },
+    ...commonHttpErrors,
   },
 };
+
 const todosRoute = {
   "/api/v1/todos": {
     get: getTodos,
@@ -285,4 +211,5 @@ const todosRoute = {
     patch: updateTodoStatus,
   },
 };
+
 export default todosRoute;

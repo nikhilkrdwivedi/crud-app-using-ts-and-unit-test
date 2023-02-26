@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import { Response, NextFunction } from "express";
 
-import { fetchOne, update, create } from "../providers/authentications";
+import { fetchOne } from "../providers/authentications";
 
 import environment from "../configurations/environment";
 
@@ -27,7 +27,7 @@ export const validateToken = async (
   if (!token) {
     return response.status(401).json({
       success: false,
-      message: httpResponseMessages.LOGOUT_DENIED,
+      message: httpResponseMessages.ACCESS_DENIED,
       error: null,
     });
   }

@@ -13,7 +13,7 @@ authenticationRouter.post(
   validator.loginValidation,
   controller.login
 );
-authenticationRouter.post("/logout", controller.logout);
+authenticationRouter.get("/logout", controller.logout);
 authenticationRouter.get("/validate-token", controller.validateToken);
 
 export default authenticationRouter;
