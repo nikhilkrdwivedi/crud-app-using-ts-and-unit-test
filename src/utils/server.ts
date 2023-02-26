@@ -7,8 +7,11 @@ import morgan from "morgan";
 
 export function createServer() {
   const app: Express = express();
-
-  app.use(cors());
+  let corsOptions = {
+    origin: "http://3.111.226.44:3020/",
+    optionsSuccessStatus: 200,
+  };
+  app.use(cors(corsOptions));
   app.use(express.json());
   app.use(morgan("dev"));
 
