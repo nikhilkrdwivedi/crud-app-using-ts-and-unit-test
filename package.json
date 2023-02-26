@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "dev": "nodemon src/app.ts",
-    "start": "node dist/src/app.js",
+    "start:docker": "docker-compose up",
+    "build:docker": "docker-compose build",
     "build": "rm -rf dist/ && tsc -p .",
     "test": "jest --watchAll --detectOpenHandles --testTimeout=5000"
   },
