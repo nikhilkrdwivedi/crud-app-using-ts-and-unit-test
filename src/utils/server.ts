@@ -1,4 +1,5 @@
 import express, { Express, Request, Response } from "express";
+import cors from "cors";
 import httpResponseMessages from "../constants/httpResponseMessages";
 import authenticationRouter from "../routes/authentications";
 import todoRouter from "../routes/todos";
@@ -6,6 +7,7 @@ import morgan from "morgan";
 
 export function createServer() {
   const app: Express = express();
+  app.use(cors());
   app.use(express.json());
   app.use(morgan("dev"));
   // Route endpoints
