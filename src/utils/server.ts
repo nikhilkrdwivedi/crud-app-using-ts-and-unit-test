@@ -7,9 +7,11 @@ import morgan from "morgan";
 
 export function createServer() {
   const app: Express = express();
+
   app.use(cors());
   app.use(express.json());
   app.use(morgan("dev"));
+
   // Route endpoints
   app.use("/api/v1/todos/", todoRouter);
   app.use("/api/v1/authentications/", authenticationRouter);
