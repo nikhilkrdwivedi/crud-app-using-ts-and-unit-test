@@ -15,7 +15,10 @@ jobs:
       matrix:
         node-version: [18.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
+    env:
+      PORT: $PORT
+      MONGODB_URL: $MONGODB_URL
+      JWT_SECRET: $JWT_SECRET
     steps:
       - uses: actions/checkout@v3
       - name: Use Node.js ${{ matrix.node-version }}
@@ -25,6 +28,7 @@ jobs:
           cache: "npm"
       - run: npm ci
       #- run: npm run build --if-present
+      - run: echo "---- $PORT ---- $JWT_SECRET ---- $MONGODB_URL ---- "
       - run: npm run test
       - run: npm run build
       - run: pm2 status
