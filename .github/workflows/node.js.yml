@@ -18,7 +18,7 @@ jobs:
     env:
       PORT: $PORT
       MONGODB_URL: ${{secrets.MONGODB_URL}}
-      JWT_SECRET: ${{env.JWT_SECRET}}
+      JWT_SECRET: ${{JWT_SECRET}}
     steps:
       - uses: actions/checkout@v3
       - name: Use Node.js ${{ matrix.node-version }}
