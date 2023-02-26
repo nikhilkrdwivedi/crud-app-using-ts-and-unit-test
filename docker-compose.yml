@@ -1,0 +1,11 @@
+version: "3.7"
+services:
+  todos-api:
+    container_name: todos-api-container
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+    build:
+      context: ./
+    ports:
+      - "3020:3020"

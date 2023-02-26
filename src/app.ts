@@ -12,8 +12,7 @@ const app = createServer();
 app.use("/docs", swagger.serve);
 app.use("/docs", swagger.setup(swaggerDocs));
 
-
 app.listen(environment.PORT, async () => {
-  console.log(`Server started on PORT [${environment.PORT} ]`);
+  console.log(`Server started on PORT [${environment.PORT}]`);
   await dbConnect();
 });
