@@ -1,4 +1,5 @@
 import TodoModel from "../models/todos";
+import { ALLOW_USER_FIELDS } from "../projection/users";
 
 export const create = async (payload: any = {}) => {
   try {
@@ -26,7 +27,14 @@ export const fetch = async (
   limit: number = 0
 ) => {
   try {
-    const result = await TodoModel.find(query).skip(skip).limit(limit).lean();
+    const result = await TodoModel.find(query)
+      .populate({
+        path: "author",
+        select: ALLOW_USER_FIELDS.join(" ") || "",
+      })
+      .skip(skip)
+      .limit(limit)
+      .lean();
     return result;
   } catch (error) {
     throw error;
@@ -36,7 +44,12 @@ export const fetch = async (
 export const fetchById = async (_id: string, optional: any = {}) => {
   try {
     const query = { _id, ...optional };
-    const result = await TodoModel.findOne(query).lean();
+    const result = await TodoModel.findOne(query)
+      .populate({
+        path: "author",
+        select: ALLOW_USER_FIELDS.join(" ") || "",
+      })
+      .lean();
     return result;
   } catch (error) {
     throw error;

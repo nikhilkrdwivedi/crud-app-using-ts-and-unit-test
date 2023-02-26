@@ -17,11 +17,11 @@ export const login = async (request: Request, response: Response) => {
       email: loginUser.email,
     };
 
-    //get user data
     const user = await fetchOne(query);
+
     if (!user) {
-      return response.status(400).json({
-        success: true,
+      return response.status(401).json({
+        success: false,
         message: httpResponseMessages.LOGIN_ERROR,
         data: loginUser,
       });
@@ -30,8 +30,8 @@ export const login = async (request: Request, response: Response) => {
     // compare passwords
     const match = bcrypt.compareSync(loginUser.password, user.password);
     if (!match) {
-      return response.status(400).json({
-        success: true,
+      return response.status(401).json({
+        success: false,
         message: httpResponseMessages.LOGIN_ERROR,
         data: loginUser,
       });
@@ -63,7 +63,7 @@ export const login = async (request: Request, response: Response) => {
   }
 };
 
-const extractTokenFromHeader = (request: Request) => {
+const extractTokenFromHeader = (request: any) => {
   if (
     request.headers.authorization &&
     request.headers.authorization.split(" ")[0] === "Bearer"
@@ -77,7 +77,7 @@ export const logout = async (request: CustomRequest, response: Response) => {
   try {
     let token = extractTokenFromHeader(request);
     if (!token) {
-      return response.status(400).json({
+      return response.status(401).json({
         success: false,
         message: httpResponseMessages.LOGOUT_DENIED,
         error: null,
@@ -118,7 +118,7 @@ export const validateToken = async (request: Request, response: Response) => {
     let token = extractTokenFromHeader(request);
 
     if (!token) {
-      return response.status(400).json({
+      return response.status(401).json({
         success: false,
         message: httpResponseMessages.LOGOUT_DENIED,
         error: null,
@@ -130,7 +130,7 @@ export const validateToken = async (request: Request, response: Response) => {
     const isValidToken: any = jwt.verify(token, environment.JWT_SECRET);
 
     if (!isValidToken) {
-      return response.status(400).json({
+      return response.status(401).json({
         success: false,
         message: httpResponseMessages.ACCESS_DENIED,
         error: null,
@@ -143,7 +143,7 @@ export const validateToken = async (request: Request, response: Response) => {
     });
 
     if (!user) {
-      return response.status(400).json({
+      return response.status(401).json({
         success: false,
         message: httpResponseMessages.ACCESS_DENIED,
         error: null,
@@ -177,7 +177,6 @@ export const register = async (request: Request, response: Response) => {
     }
     //user existence check
     const checkUser = await fetchOne({ email: registerUser.email });
-    console.log("checkUser ", checkUser);
     if (checkUser) {
       return response.status(409).json({
         success: false,

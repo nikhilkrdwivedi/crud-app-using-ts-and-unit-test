@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import joi from "joi";
+import { CustomRequest } from "../../types/customRequest";
 import { error } from "./response";
 
 const addTodoRequestSchema = {
@@ -35,7 +36,7 @@ const paramsRequestSchema = {
 };
 
 export const addTodoValidation = (
-  request: Request,
+  request: CustomRequest,
   response: Response,
   next: NextFunction
 ) => {
@@ -49,13 +50,12 @@ export const addTodoValidation = (
 };
 
 export const updateTodoValidation = (
-  request: Request,
+  request: CustomRequest,
   response: Response,
   next: NextFunction
 ) => {
   const requestBodySchema = joi.object(updateTodoRequestSchema);
   const requestBodyValidation = requestBodySchema.validate(request.body);
-  console.log(requestBodyValidation);
   if (requestBodyValidation.error) {
     return error(requestBodyValidation.error, response);
   }
@@ -63,13 +63,12 @@ export const updateTodoValidation = (
 };
 
 export const validateParams = (
-  request: Request,
+  request: CustomRequest,
   response: Response,
   next: NextFunction
 ) => {
   const requestParamsSchema = joi.object(paramsRequestSchema);
   const requestParamsValidation = requestParamsSchema.validate(request.params);
-  console.log(requestParamsValidation);
   if (requestParamsValidation.error) {
     return error(requestParamsValidation.error, response);
   } else {

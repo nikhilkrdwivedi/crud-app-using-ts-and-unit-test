@@ -19,6 +19,9 @@ const httpResponseMessages = {
   USER_ALREADY_EXIST:
     "Hey, are you sure you haven't used this email before. Please login!",
   USER_CREATED: "User successfully created!",
+  EMAIL_REQUIRED: "Email is required!",
+  NAME_REQUIRED: "Name is required!",
+  PASSWORD_REQUIRED: "Password is required!",
 };
 
 export default httpResponseMessages;

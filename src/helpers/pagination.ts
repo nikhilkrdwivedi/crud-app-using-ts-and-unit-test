@@ -1,6 +1,6 @@
 import { PageInfo } from "../types/pageInfo";
 
-export const getPaginationQueryData = async (pageInfo: PageInfo) => {
+export const getPaginationQueryData = (pageInfo: PageInfo) => {
   let currentPage = parseInt(pageInfo?.currentPage) || 0;
   let limit = parseInt(pageInfo?.limit) || 10;
   let skip = currentPage * limit;
@@ -14,7 +14,7 @@ export const getPaginationQueryData = async (pageInfo: PageInfo) => {
   return { skip, limit, currentPage };
 };
 
-export const getPaginationInfo = async (
+export const getPaginationInfo = (
   total: number,
   limit: number,
   currentPage: number

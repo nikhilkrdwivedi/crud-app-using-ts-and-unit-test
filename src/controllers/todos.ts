@@ -20,14 +20,12 @@ import { TODOS_STATUS } from "../constants/todos";
 export const getTodos = async (request: CustomRequest, response: Response) => {
   try {
     const query = { author: request?.user?._id };
-    const { skip, limit, currentPage } = await getPaginationQueryData(
-      request.query
-    );
+    const { skip, limit, currentPage } = getPaginationQueryData(request.query);
     const [data, total] = await Promise.all([
       fetch(query, skip, limit),
       countDocuments(query),
     ]);
-    const pagination = await getPaginationInfo(total, limit, currentPage);
+    const pagination = getPaginationInfo(total, limit, currentPage);
 
     return response.status(200).json({
       success: true,
