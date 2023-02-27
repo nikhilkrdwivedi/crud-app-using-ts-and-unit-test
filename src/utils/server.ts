@@ -8,7 +8,7 @@ import morgan from "morgan";
 export function createServer() {
   const app: Express = express();
   let corsOptions = {
-    origin: "http://3.111.226.44:3020/",
+    origin: "*",
     optionsSuccessStatus: 200,
   };
   app.use(cors(corsOptions));

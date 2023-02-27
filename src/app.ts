@@ -1,5 +1,3 @@
-import express, { Express, Request, Response } from "express";
-import mongoose from "mongoose";
 import swagger from "swagger-ui-express";
 
 import environment from "./configurations/environment";
