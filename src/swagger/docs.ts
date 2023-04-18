@@ -6,9 +6,9 @@ import authenticationsRoute from "./api/authentications";
 const swaggerDocs = {
   openapi: "3.0.0",
   info: {
-    title: "Official INeuron Documentations",
+    title: "Official Documentations",
     version: "1.0.0",
-    description: "This is official documentations for INeuron.",
+    description: "This is official documentations.",
   },
   servers: [
     {
