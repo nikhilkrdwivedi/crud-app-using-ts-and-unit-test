@@ -1,6 +1,6 @@
 # NodeJS Todo App
 
-#### Pre-Requisite
+#### Pre-Requisite 
 - Install Node Version `[v18.14.2]` | If you're using NVM run command `nvm use` .nvmrc file is already there in root dir. 
 - Install [Docker](https://docs.docker.com/get-docker/) (Optional) 
 - Basic knowledge of Typescript and Nodejs
